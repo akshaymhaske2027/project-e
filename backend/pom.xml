@@ -128,7 +128,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+<!--bff-service-->
 	</dependencies>
 
 	<build>

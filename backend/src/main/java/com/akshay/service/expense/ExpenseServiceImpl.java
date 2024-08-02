@@ -19,9 +19,6 @@ public class ExpenseServiceImpl implements ExpenseService{
 
     private final ExpenseRepository expenseRepository;
 
-    public Expense postExpense(ExpenseDto expenseDto){
-        return  saveOrUpdateExpense(new Expense(),expenseDto);
-    }
 
     private Expense saveOrUpdateExpense(Expense expense, ExpenseDto expenseDto){
 
@@ -34,24 +31,39 @@ public class ExpenseServiceImpl implements ExpenseService{
         return expenseRepository.save(expense);
     }
 
-    public Expense updateExpense(Long id,ExpenseDto expenseDto){
+    public Expense postExpense(ExpenseDto expenseDto) {
+
+       return saveOrUpdateExpense(new Expense(),expenseDto);
+    }
+
+    @Override
+    public Expense updateExpense(Long id, ExpenseDto expenseDto) {
         Optional<Expense> optionalExpense = expenseRepository.findById(id);
         if (optionalExpense.isPresent()) {
             return saveOrUpdateExpense(optionalExpense.get(),expenseDto);
         }else {
             throw new EntityNotFoundException("Expense is not present with id"+id);
         }
-
     }
 
-
-    public List<Expense> getAllExpense(){
+    @Override
+    public void deleteExpense(Long id) {
+        Optional<Expense> optionalExpense = expenseRepository.findById(id);
+        if (optionalExpense.isPresent() ){
+            expenseRepository.deleteById(id);
+        }else {
+            throw new EntityNotFoundException("Expense is not present with id "+id);
+        }
+    }
+    @Override
+    public List<Expense> getAllExpense() {
         return expenseRepository.findAll().stream()
                 .sorted(Comparator.comparing(Expense::getDate).reversed())
                 .collect(Collectors.toList());
     }
 
-    public Expense getExpenseById(Long id){
+    @Override
+    public Expense getExpenseById(Long id) {
         Optional<Expense> optionalExpense = expenseRepository.findById(id);
         if (optionalExpense.isPresent()) {
             return optionalExpense.get();
@@ -61,13 +73,15 @@ public class ExpenseServiceImpl implements ExpenseService{
         }
     }
 
-    public void deleteExpense(Long id){
-        Optional<Expense> optionalExpense = expenseRepository.findById(id);
-        if (optionalExpense.isPresent() ){
-            expenseRepository.deleteById(id);
-        }else {
-            throw new EntityNotFoundException("Expense is not present with id "+id);
-        }
-    }
 
 }
+
+
+
+
+
+
+//   public List<String> getExpenseCategories(){
+//        return expenseRepository.findDistinctExpenseCategories();
+//    }
+

@@ -19,4 +19,8 @@ public interface ExpenseRepository extends JpaRepository<Expense,Long> {
     Double sumAllAmount();
 
     Optional<Expense> findFirstByOrderByDate();
+
+//    @Query("SELECT DISTINCT e.CATEGORY FROM EXPENSE e")
+//    List<String> findDistinctExpenseCategories();
+
 }

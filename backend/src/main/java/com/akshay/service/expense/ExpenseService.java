@@ -10,6 +10,8 @@ public interface ExpenseService {
 
     Expense postExpense(ExpenseDto expenseDto);
 
+//  Expense postExpense(ExpenseDto expenseDto);
+
     List<Expense> getAllExpense();
 
     Expense getExpenseById(Long id);
@@ -17,4 +19,7 @@ public interface ExpenseService {
     Expense updateExpense(Long id,ExpenseDto expenseDto);
 
     void deleteExpense(Long id);
+
+//    List<String> getExpenseCategories();
+
 }
